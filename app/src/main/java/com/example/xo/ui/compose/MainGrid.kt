@@ -1,5 +1,7 @@
 package com.example.xo.ui.compose
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -18,23 +20,44 @@ import com.example.xo.ui.theme.XOTheme
 @Composable
 fun Main3X3() {
     gridView()
-
 }
 
 @Composable
-fun GridButton() {
+fun gridView() {
+    var buttonList = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        modifier = Modifier.padding(10.dp)
+    ) {
+        items(buttonList.size) {
+            GridButton(it, itemClicked = {
+                Log.d("ItemClicked",it.toString())
 
-
-    Button(modifier = Modifier
-        .wrapContentHeight()
-        .wrapContentWidth(),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray),
-        onClick = { /*TODO*/ }) {
-        Text(text = "X", fontSize = 20.sp)
-
-
+            })
+        }
     }
 }
+
+@Composable
+fun GridButton(
+    position: Int, itemClicked: (
+        Int
+    ) -> Unit
+) {
+    Button(
+        modifier = Modifier
+            .wrapContentHeight()
+            .wrapContentWidth(),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray),
+        onClick = {
+            itemClicked(position)
+
+        },
+    ) {
+        Text(text = "", fontSize = 20.sp)
+    }
+}
+
 
 @Preview
 @Composable
@@ -46,21 +69,6 @@ fun Main3X3Preview() {
             color = MaterialTheme.colors.background
         ) {
             Main3X3()
-        }
-    }
-}
-
-
-@Composable
-fun gridView() {
-     var courseList= listOf("1","2","3","4","5","6","7","8","9")
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        modifier = Modifier.padding(10.dp)
-    ) {
-        items(courseList.size) {
-            GridButton()
-
         }
     }
 }
