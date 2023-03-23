@@ -6,16 +6,20 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import com.example.xo.ui.compose.Main3X3
 import com.example.xo.ui.theme.XOTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var viewModel: MainViewModel
+    private val TAG = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         setContent {
 
             XOTheme {
@@ -24,22 +28,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Main3X3()
+                    Main3X3(viewModel.buttonList, itemClicked = {
+                        viewModel.onItemClicked(it)
+                    })
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     XOTheme {
-        Greeting("Android")
     }
 }

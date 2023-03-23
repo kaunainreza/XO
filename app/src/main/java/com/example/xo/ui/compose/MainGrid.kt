@@ -1,7 +1,6 @@
 package com.example.xo.ui.compose
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -18,22 +17,18 @@ import androidx.compose.ui.unit.sp
 import com.example.xo.ui.theme.XOTheme
 
 @Composable
-fun Main3X3() {
-    gridView()
+fun Main3X3(buttonList: MutableList<String>, itemClicked: (Int) -> Unit) {
+    gridView(buttonList, itemClicked)
 }
 
 @Composable
-fun gridView() {
-    var buttonList = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
+fun gridView(buttonList: MutableList<String>, itemClicked: (Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = Modifier.padding(10.dp)
     ) {
         items(buttonList.size) {
-            GridButton(it, itemClicked = {
-                Log.d("ItemClicked",it.toString())
-
-            })
+            GridButton(it, itemClicked)
         }
     }
 }
@@ -68,7 +63,10 @@ fun Main3X3Preview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            Main3X3()
+            var buttonList = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
+            Main3X3(buttonList, itemClicked = {
+                Log.d("Main3X3Preview : ItemClicked",it.toString())
+            })
         }
     }
 }
