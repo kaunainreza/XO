@@ -93,7 +93,7 @@ fun Cross() {
     }
 }
 
-/*@Composable
+@Composable
 fun WinVerticalLine1() {
     Canvas(modifier = Modifier.size(300.dp)) {
         drawLine(
@@ -208,7 +208,7 @@ fun Prevs() {
     WinHorizontalLine3()
     WinDiagonalLine1()
     WinDiagonalLine2()
-}*/
+}
 
 @Preview
 @Composable
