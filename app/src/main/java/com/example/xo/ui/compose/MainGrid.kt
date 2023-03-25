@@ -16,13 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.xo.ui.theme.XOTheme
 
-@Composable
-fun Main3X3(buttonList: MutableList<String>, itemClicked: (Int) -> Unit) {
-    gridView(buttonList, itemClicked)
-}
+
 
 @Composable
-fun gridView(buttonList: MutableList<String>, itemClicked: (Int) -> Unit) {
+fun Main3X3(buttonList: MutableList<String>, itemClicked: (Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = Modifier.padding(10.dp)
