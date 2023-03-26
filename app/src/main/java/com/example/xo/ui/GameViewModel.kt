@@ -33,7 +33,7 @@ class GameViewModel : ViewModel() {
     private fun getdata(databaseReference: DatabaseReference) {
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(@NonNull snapshot: DataSnapshot) {
-                val value = snapshot.getValue(String::class.java)
+                 val value = snapshot.getValue(Any::class.java)
                 Log.d(TAG, value.toString())
             }
 
