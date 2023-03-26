@@ -1,8 +1,7 @@
 package com.example.xo.ui.compose
 
-data class GameEvent(
-    var buttonId: Int? = null,
+ class GameEvent(
+    var buttonId: String? = null,
     var playerId: String? = null,
 
     )
-

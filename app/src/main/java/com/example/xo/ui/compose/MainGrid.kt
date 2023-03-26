@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.xo.ui.GameViewModel
 import com.example.xo.ui.theme.XOTheme
+import kotlinx.coroutines.flow.firstOrNull
 
 
 @Composable
@@ -24,8 +25,7 @@ fun Main3X3(viewModel: GameViewModel, itemClicked: (Int) -> Unit) {
         modifier = Modifier.padding(10.dp)
     ) {
         items(9) { position ->
-
-            val event = viewModel.gameEvents.firstOrNull { it.buttonId == position }
+            val event = viewModel.gameEventStateFlow?.value?.firstOrNull() { it?.buttonId == position.toString() }
             val xo = event?.playerId ?: ""
             GridButton(xo, position, itemClicked)
         }
