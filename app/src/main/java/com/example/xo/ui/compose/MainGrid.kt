@@ -1,6 +1,5 @@
 package com.example.xo.ui.compose
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -14,24 +13,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.xo.ui.GameViewModel
 import com.example.xo.ui.theme.XOTheme
 
 
-
 @Composable
-fun Main3X3(buttonList: MutableList<String>, itemClicked: (Int) -> Unit) {
+fun Main3X3(viewModel: GameViewModel, itemClicked: (Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = Modifier.padding(10.dp)
     ) {
-        items(buttonList.size) {
-            GridButton(it, itemClicked)
+        items(9) { position ->
+
+            val event = viewModel.gameEvents.firstOrNull { it.buttonId == position }
+            val xo = event?.playerId ?: ""
+            GridButton(xo, position, itemClicked)
         }
     }
 }
 
 @Composable
 fun GridButton(
+    playerXO: String = "",
     position: Int, itemClicked: (
         Int
     ) -> Unit
@@ -46,7 +49,7 @@ fun GridButton(
 
         },
     ) {
-        Text(text = "", fontSize = 20.sp)
+        Text(text = playerXO, fontSize = 20.sp)
     }
 }
 
@@ -60,10 +63,10 @@ fun Main3X3Preview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            var buttonList = mutableListOf("1", "2", "3", "4", "5", "6", "7", "8", "9")
-            Main3X3(buttonList, itemClicked = {
-                Log.d("Main3X3Preview : ItemClicked",it.toString())
-            })
+            /* var gameEvents = mutableStateListOf<GameEvent>()
+             Main3X3(gameEvents, itemClicked = {
+                 Log.d("Main3X3Preview : ItemClicked", it.toString())
+             })*/
         }
     }
 }
