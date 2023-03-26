@@ -1,8 +1,8 @@
 package com.example.xo.ui.compose
 
-class Players (
+data class Players(
 
-    var employeeName: String,
-    var employeeContactNumber: String,
-    var employeeAddress: String
-    )
+    var employeeName: String? = null,
+    var employeeContactNumber: String? = null,
+    var employeeAddress: String? = null
+)

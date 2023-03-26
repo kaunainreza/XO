@@ -8,15 +8,16 @@ import com.google.firebase.database.*
 
 
 class GameViewModel : ViewModel() {
-    val TAG = "GameViewModel"
-    val firebaseDatabase = FirebaseDatabase.getInstance();
-    val databaseReference = firebaseDatabase.getReference("EmployeeInfo");
+    private val TAG = "GameViewModel"
+    private val firebaseDatabase = FirebaseDatabase.getInstance();
+    private val databaseReference = firebaseDatabase.getReference("Players");
 
     init {
         addData(databaseReference)
-        getdata(databaseReference)
+        getData(databaseReference)
     }
-    fun addData(databaseReference: DatabaseReference) {
+
+    private fun addData(databaseReference: DatabaseReference) {
         val empObj = Players("En", "Ec", "Add");
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -30,10 +31,10 @@ class GameViewModel : ViewModel() {
     }
 
 
-    private fun getdata(databaseReference: DatabaseReference) {
+    private fun getData(databaseReference: DatabaseReference) {
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(@NonNull snapshot: DataSnapshot) {
-                 val value = snapshot.getValue(Any::class.java)
+                val value = snapshot.getValue(Players::class.java)
                 Log.d(TAG, value.toString())
             }
 
