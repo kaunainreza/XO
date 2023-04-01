@@ -24,6 +24,7 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    LoginPage(viewModel)
                 }
             }
         }

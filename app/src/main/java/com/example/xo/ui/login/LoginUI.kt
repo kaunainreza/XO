@@ -1,4 +1,4 @@
-package com.example.xo.ui
+package com.example.xo.ui.login
 
 
 import androidx.compose.foundation.Image
@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -32,23 +31,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.xo.R
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.example.xo.ui.theme.XOTheme
 
 
 @Composable
-fun LoginPage() {
-    val context = LocalContext.current
-
-
+fun LoginPage(viewModel: LoginViewModel? = null) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(
-                color = Color.Transparent,
-            )
-    ) {
 
+    ) {
 
         Box(
             modifier = Modifier
@@ -56,7 +49,7 @@ fun LoginPage() {
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
@@ -81,27 +74,21 @@ fun LoginPage() {
                     modifier = Modifier
                         .padding(top = 130.dp)
                         .fillMaxWidth(),
+                    fontSize = 30.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                SimpleOutlinedTextFieldSample()
+                SimpleOutlinedTextFieldSample(viewModel)
 
                 Spacer(modifier = Modifier.padding(3.dp))
-                SimpleOutlinedPasswordTextField()
+                SimpleOutlinedPasswordTextField(viewModel)
 
                 val gradientColor = listOf(Color(0xFF484BF1), Color(0xFF673AB7))
                 val cornerRadius = 16.dp
 
 
                 Spacer(modifier = Modifier.padding(10.dp))
-                /* Button(
-                     onClick = {},
-                     modifier = Modifier
-                         .fillMaxWidth(0.8f)
-                         .height(50.dp)
-                 ) {
-                     Text(text = "Login", fontSize = 20.sp)
-                 }*/
                 GradientButton(
+                    viewModel,
                     gradientColors = gradientColor,
                     cornerRadius = cornerRadius,
                     nameButton = "Login",
@@ -111,32 +98,12 @@ fun LoginPage() {
                 Spacer(modifier = Modifier.padding(10.dp))
 
                 Button(onClick = {
-                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build()
-
-
+                    viewModel?.onGoogleClick()
 
                 }) {
                     Text("Sign in via Google")
                 }
 
-                /*TextButton(onClick = {
-                    navController.navigate("register_page") {
-                        popUpTo(navController.graph.startDestinationId)
-                        launchSingleTop = true
-                    }
-
-                }) {
-                    Text(
-                        text = "Create An Account",
-                        letterSpacing = 1.sp,
-                    )
-                }*/
-
-
-
-                Spacer(modifier = Modifier.padding(5.dp))
                 Spacer(modifier = Modifier.padding(20.dp))
 
             }
@@ -147,6 +114,7 @@ fun LoginPage() {
 
 @Composable
 private fun GradientButton(
+    viewModel: LoginViewModel?,
     gradientColors: List<Color>,
     cornerRadius: Dp,
     nameButton: String,
@@ -158,7 +126,7 @@ private fun GradientButton(
             .fillMaxWidth()
             .padding(start = 32.dp, end = 32.dp),
         onClick = {
-            //your code
+            viewModel?.onLoginClick()
         },
 
         contentPadding = PaddingValues(),
@@ -176,10 +144,6 @@ private fun GradientButton(
                     shape = roundedCornerShape
                 )
                 .clip(roundedCornerShape)
-                /*.background(
-                    brush = Brush.linearGradient(colors = gradientColors),
-                    shape = RoundedCornerShape(cornerRadius)
-                )*/
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -196,13 +160,14 @@ private fun GradientButton(
 //email id
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SimpleOutlinedTextFieldSample() {
+fun SimpleOutlinedTextFieldSample(viewModel: LoginViewModel?) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    var text by rememberSaveable { mutableStateOf("") }
-
+    val text = viewModel?.emailId?.value ?: ""
     OutlinedTextField(
         value = text,
-        onValueChange = { text = it },
+        onValueChange = {
+            viewModel?.onEmailChange(it)
+        },
         shape = RoundedCornerShape(topEnd = 12.dp, bottomStart = 12.dp),
         label = {
             Text(
@@ -231,13 +196,15 @@ fun SimpleOutlinedTextFieldSample() {
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SimpleOutlinedPasswordTextField() {
+fun SimpleOutlinedPasswordTextField(viewModel: LoginViewModel?) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    var password by rememberSaveable { mutableStateOf("") }
-    var passwordHidden by rememberSaveable { mutableStateOf(true) }
+    val passwordHidden by rememberSaveable { mutableStateOf(true) }
+    val text = viewModel?.pwd?.value ?: ""
     OutlinedTextField(
-        value = password,
-        onValueChange = { password = it },
+        value = text,
+        onValueChange = {
+            viewModel?.onPwdChange(it)
+        },
         shape = RoundedCornerShape(topEnd = 12.dp, bottomStart = 12.dp),
         label = {
             Text(
@@ -262,26 +229,18 @@ fun SimpleOutlinedPasswordTextField() {
         )
     )
 }
-/*
-@Composable
- fun onCreate(savedInstanceState: Bundle?) {
-
-    oneTapClient = ContactsContract.CommonDataKinds.Identity.getSignInClient(this)
-    signInRequest = BeginSignInRequest.builder()
-        .setGoogleIdTokenRequestOptions(
-            BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                .setSupported(true)
-                .setServerClientId(getString(R.string.your_web_client_id))
-                .setFilterByAuthorizedAccounts(true)
-                .build())
-        .setAutoSelectEnabled(true)
-        .build()
-}
-}*/
 
 
 @Preview
 @Composable
 fun pev() {
-    LoginPage()
+    XOTheme {
+
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            LoginPage()
+        }
+    }
 }
