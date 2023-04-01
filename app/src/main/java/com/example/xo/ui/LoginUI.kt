@@ -1,8 +1,6 @@
 package com.example.xo.ui
 
 
-import android.os.Bundle
-import android.provider.ContactsContract
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -39,8 +37,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 @Composable
 fun LoginPage() {
-
-
     val context = LocalContext.current
 
 
@@ -115,6 +111,11 @@ fun LoginPage() {
                 Spacer(modifier = Modifier.padding(10.dp))
 
                 Button(onClick = {
+                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build()
+
+
 
                 }) {
                     Text("Sign in via Google")
@@ -139,13 +140,8 @@ fun LoginPage() {
                 Spacer(modifier = Modifier.padding(20.dp))
 
             }
-
-
         }
-
     }
-
-
 }
 
 
