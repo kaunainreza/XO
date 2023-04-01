@@ -1,5 +1,6 @@
 package com.example.xo.ui.compose
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -8,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,20 +26,14 @@ fun Main3X3(viewModel: GameViewModel, itemClicked: (Int) -> Unit) {
         modifier = Modifier.padding(10.dp)
     ) {
         items(9) { position ->
-
-            val event = viewModel.gameEvents.firstOrNull { it.buttonId == position }
-            val xo = event?.playerId ?: ""
-            GridButton(xo, position, itemClicked)
+            GridButton(viewModel, position, itemClicked)
         }
     }
 }
 
 @Composable
 fun GridButton(
-    playerXO: String = "",
-    position: Int, itemClicked: (
-        Int
-    ) -> Unit
+    viewModel: GameViewModel, position: Int, itemClicked: (Int) -> Unit
 ) {
     Button(
         modifier = Modifier
@@ -49,7 +45,11 @@ fun GridButton(
 
         },
     ) {
-        Text(text = playerXO, fontSize = 20.sp)
+        var  t = remember {
+            viewModel?.gameEventStateFlow?.value?.get(position)?.playerId?:""
+        }
+        Log.d("********", t)
+        Text(text =t, fontSize = 20.sp)
     }
 }
 
