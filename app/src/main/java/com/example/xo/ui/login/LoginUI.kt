@@ -1,14 +1,11 @@
 package com.example.xo.ui.login
 
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -21,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -77,22 +75,15 @@ fun LoginPage(viewModel: LoginViewModel? = null) {
                     fontSize = 30.sp
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                SimpleOutlinedTextFieldSample(viewModel)
+                EmailEditTextField(viewModel)
 
                 Spacer(modifier = Modifier.padding(3.dp))
-                SimpleOutlinedPasswordTextField(viewModel)
-
-                val gradientColor = listOf(Color(0xFF484BF1), Color(0xFF673AB7))
-                val cornerRadius = 16.dp
-
+                PasswordTextField(viewModel)
 
                 Spacer(modifier = Modifier.padding(10.dp))
-                GradientButton(
+                LoginButton(
                     viewModel,
-                    gradientColors = gradientColor,
-                    cornerRadius = cornerRadius,
                     nameButton = "Login",
-                    roundedCornerShape = RoundedCornerShape(topStart = 30.dp, bottomEnd = 30.dp)
                 )
 
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -104,54 +95,10 @@ fun LoginPage(viewModel: LoginViewModel? = null) {
                     Text("Sign in via Google")
                 }
 
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
+                RegisterNow(viewModel = viewModel, nameButton = "Register Now?")
 
             }
-        }
-    }
-}
-
-
-@Composable
-private fun GradientButton(
-    viewModel: LoginViewModel?,
-    gradientColors: List<Color>,
-    cornerRadius: Dp,
-    nameButton: String,
-    roundedCornerShape: RoundedCornerShape
-) {
-
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 32.dp, end = 32.dp),
-        onClick = {
-            viewModel?.onLoginClick()
-        },
-
-        contentPadding = PaddingValues(),
-        colors = ButtonDefaults.buttonColors(
-
-        ),
-        shape = RoundedCornerShape(cornerRadius)
-    ) {
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    brush = Brush.horizontalGradient(colors = gradientColors),
-                    shape = roundedCornerShape
-                )
-                .clip(roundedCornerShape)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = nameButton,
-                fontSize = 20.sp,
-                color = Color.White
-            )
         }
     }
 }
@@ -160,7 +107,7 @@ private fun GradientButton(
 //email id
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SimpleOutlinedTextFieldSample(viewModel: LoginViewModel?) {
+fun EmailEditTextField(viewModel: LoginViewModel?) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val text = viewModel?.emailId?.value ?: ""
     OutlinedTextField(
@@ -196,7 +143,7 @@ fun SimpleOutlinedTextFieldSample(viewModel: LoginViewModel?) {
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SimpleOutlinedPasswordTextField(viewModel: LoginViewModel?) {
+fun PasswordTextField(viewModel: LoginViewModel?) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val passwordHidden by rememberSaveable { mutableStateOf(true) }
     val text = viewModel?.pwd?.value ?: ""
@@ -228,6 +175,79 @@ fun SimpleOutlinedPasswordTextField(viewModel: LoginViewModel?) {
             }
         )
     )
+}
+
+@Composable
+private fun LoginButton(
+    viewModel: LoginViewModel?,
+    nameButton: String,
+) {
+
+    Box(
+        modifier = Modifier
+            .height(48.dp)
+            .fillMaxWidth(0.8f)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFF5B5EF0),
+                        Color(0xFFEE4A82)
+                    )
+
+                ),
+                shape = RoundedCornerShape(30)
+            )
+            .clickable {
+                viewModel?.onLoginClick()
+            }, contentAlignment = Alignment.Center
+    ) {
+        Text(text = nameButton, fontSize = 22.sp)
+    }
+
+}
+
+@Composable
+fun RegisterNow(
+    viewModel: LoginViewModel?,
+    nameButton: String,
+) {
+    Box(
+        modifier = Modifier
+            .height(36.dp)
+            .fillMaxWidth(0.7f)
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFF797BE9),
+                        Color(0xFFE7C6D1)
+                    )
+
+                ),
+                shape = RoundedCornerShape(30)
+            )
+            .clickable {
+                viewModel?.onRegisterClick()
+            }, contentAlignment = Alignment.Center
+    ) {
+        Text(text = nameButton, fontSize = 14.sp, color = Color.White)
+    }
+
+}
+
+
+@Composable
+fun SnackBarExample(msg: String) {
+    var snackbarVisible by remember { mutableStateOf(false) }
+
+    if (snackbarVisible) {
+        Snackbar(
+            modifier = Modifier.padding(16.dp),
+        ) {
+
+            Text(text = msg)
+        }
+    }
+
 }
 
 
