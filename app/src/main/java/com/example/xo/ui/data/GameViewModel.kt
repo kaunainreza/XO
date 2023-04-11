@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
-class XoGameViewModel : ViewModel() {
+class GameViewModel : ViewModel() {
     var state by mutableStateOf(GameState())
 
     val boardItems: MutableMap<Int, BoardCellValue> = mutableMapOf(
@@ -33,8 +33,9 @@ class XoGameViewModel : ViewModel() {
             }
         }
     }
-    private fun gameReset(){
-        boardItems.forEach{(i,_) ->
+
+    private fun gameReset() {
+        boardItems.forEach { (i, _) ->
             boardItems[i] = BoardCellValue.NONE
         }
         state = state.copy(

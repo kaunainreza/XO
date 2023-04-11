@@ -41,11 +41,11 @@ class LoginViewModel : ViewModel() {
     }
 
     fun onRegisterClick() {
-       // _logInState.value = LoginStatus.DO_REGISTER
         registerNewUser()
     }
     fun onLoginClick() {
-        loginUser()
+         _logInState.value = LoginStatus.BYPASS_LOGIN
+        //loginUser()
     }
 
     fun onGoogleClick() {

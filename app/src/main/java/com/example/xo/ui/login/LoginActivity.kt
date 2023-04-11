@@ -45,6 +45,12 @@ class LoginActivity : ComponentActivity() {
                         LoginStatus.SHOW_LOGIN_PAGE -> {
                             LoginPage(viewModel)
                         }
+                        LoginStatus.BYPASS_LOGIN -> {
+                            val myIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                            this@LoginActivity.startActivity(myIntent)
+                            finishAffinity()
+                            SnackBarExample("BYPASS_LOGIN")
+                        }
                         LoginStatus.LOGIN_SUC -> {
                             val myIntent = Intent(this@LoginActivity, MainActivity::class.java)
                             this@LoginActivity.startActivity(myIntent)

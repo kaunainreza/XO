@@ -3,13 +3,9 @@ package com.example.xo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
-import com.example.xo.ui.GameViewModel
-import com.example.xo.ui.compose.Main3X3
+import com.example.xo.ui.compose.GameScreen
+import com.example.xo.ui.data.GameViewModel
 import com.example.xo.ui.theme.XOTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,19 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         setContent {
+            GameScreen(viewModel = viewModel)
 
-            XOTheme {
-
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Main3X3(viewModel) {
-                        viewModel.onGameButtonClicked(it)
-                    }
-                }
-            }
         }
     }
 }
