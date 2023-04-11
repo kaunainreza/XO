@@ -1,4 +1,4 @@
-package com.example.xo.ui.compose
+package com.example.xo.presentation.main_game
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -27,9 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.xo.ui.data.*
-import com.example.xo.ui.theme.BlueCustom
-import com.example.xo.ui.theme.GrayBackground
+import com.example.xo.data.*
+import com.example.xo.presentation.compose.*
+import com.example.xo.presentation.main_game.GameViewModel
+import com.example.xo.presentation.theme.BlueCustom
+import com.example.xo.presentation.theme.GrayBackground
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

@@ -1,9 +1,13 @@
-package com.example.xo.ui.data
+package com.example.xo.presentation.main_game
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.xo.data.BoardCellValue
+import com.example.xo.data.GameState
+import com.example.xo.data.UserAction
+import com.example.xo.data.VictoryType
 
 class GameViewModel : ViewModel() {
     var state by mutableStateOf(GameState())

@@ -1,4 +1,4 @@
-package com.example.xo.ui.compose
+package com.example.xo.presentation.compose
 
 import android.database.CrossProcessCursor
 import androidx.compose.foundation.Canvas

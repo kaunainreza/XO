@@ -1,4 +1,4 @@
-package com.example.xo.ui.login
+package com.example.xo.presentation.login
 
 import android.text.TextUtils
 import android.util.Log

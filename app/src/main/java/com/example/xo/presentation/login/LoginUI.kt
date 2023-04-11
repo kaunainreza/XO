@@ -1,4 +1,4 @@
-package com.example.xo.ui.login
+package com.example.xo.presentation.login
 
 
 import androidx.compose.foundation.*
@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.xo.R
-import com.example.xo.ui.theme.XOTheme
+import com.example.xo.presentation.theme.XOTheme
 
 
 @Composable

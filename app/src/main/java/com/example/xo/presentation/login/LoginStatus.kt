@@ -1,4 +1,4 @@
-package com.example.xo.ui.login
+package com.example.xo.presentation.login
 
 enum class LoginStatus {
     SHOW_LOADER, SHOW_LOGIN_PAGE, EMAIL_NOT_VALID, PWD_NOT_VALID, WRONG_EMAIL_OR_PWD, DO_REGISTER,REGISTER_SUC,

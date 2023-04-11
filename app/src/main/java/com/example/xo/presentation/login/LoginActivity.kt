@@ -1,4 +1,4 @@
-package com.example.xo.ui.login
+package com.example.xo.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,10 +10,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
-import com.example.xo.MainActivity
-import com.example.xo.ui.theme.XOTheme
+import com.example.xo.presentation.main_game.GameActivity
+import com.example.xo.presentation.theme.XOTheme
 
 class LoginActivity : ComponentActivity() {
     private lateinit var viewModel: LoginViewModel
@@ -38,7 +37,7 @@ class LoginActivity : ComponentActivity() {
                             }
                         }
                         LoginStatus.ALREADY_LOGIN -> {
-                            val myIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                            val myIntent = Intent(this@LoginActivity, GameActivity::class.java)
                             this@LoginActivity.startActivity(myIntent)
                             finishAffinity()
                         }
@@ -46,13 +45,13 @@ class LoginActivity : ComponentActivity() {
                             LoginPage(viewModel)
                         }
                         LoginStatus.BYPASS_LOGIN -> {
-                            val myIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                            val myIntent = Intent(this@LoginActivity, GameActivity::class.java)
                             this@LoginActivity.startActivity(myIntent)
                             finishAffinity()
                             SnackBarExample("BYPASS_LOGIN")
                         }
                         LoginStatus.LOGIN_SUC -> {
-                            val myIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                            val myIntent = Intent(this@LoginActivity, GameActivity::class.java)
                             this@LoginActivity.startActivity(myIntent)
                             finishAffinity()
                             SnackBarExample("LOGIN_SUC")
@@ -61,7 +60,7 @@ class LoginActivity : ComponentActivity() {
                             SnackBarExample("LOGIN_FAILED")
                         }
                         LoginStatus.REGISTER_SUC -> {
-                            val myIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                            val myIntent = Intent(this@LoginActivity, GameActivity::class.java)
                             this@LoginActivity.startActivity(myIntent)
                             finishAffinity()
                             SnackBarExample("REGISTER_SUC")

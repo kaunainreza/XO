@@ -1,4 +1,4 @@
-package com.example.xo.ui.data
+package com.example.xo.data
 
 data class GameState(
     val playerCircleCount: Int = 0,
