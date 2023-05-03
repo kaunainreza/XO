@@ -1,10 +1,9 @@
 package com.example.xo.presentation.login
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.example.xo.presentation.compose.SignInResult
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -47,11 +46,6 @@ class LoginViewModel : ViewModel() {
          _logInState.value = LoginStatus.BYPASS_LOGIN
         //loginUser()
     }
-
-    fun onGoogleClick() {
-        Log.d(Tag, "onGoogleClick")
-    }
-
 
     private fun checkLoginStatus() {
         _currentUser.value = mAuth.currentUser
@@ -112,6 +106,14 @@ class LoginViewModel : ViewModel() {
                     _logInState.value = LoginStatus.REGISTER_FAIL
                 }
             })
+    }
+
+    fun onSignInResult(signInResult: SignInResult) {
+        if (signInResult.data != null) {
+            _logInState.value = LoginStatus.REGISTER_SUC
+        } else {
+            _logInState.value = LoginStatus.REGISTER_FAIL
+        }
     }
 
 }

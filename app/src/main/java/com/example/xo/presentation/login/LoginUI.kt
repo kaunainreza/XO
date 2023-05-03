@@ -12,20 +12,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.xo.R
@@ -33,14 +30,13 @@ import com.example.xo.presentation.theme.XOTheme
 
 
 @Composable
-fun LoginPage(viewModel: LoginViewModel? = null) {
+fun LoginPage(viewModel: LoginViewModel? = null, onSignInClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
 
     ) {
-
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter),
@@ -88,12 +84,11 @@ fun LoginPage(viewModel: LoginViewModel? = null) {
 
                 Spacer(modifier = Modifier.padding(10.dp))
 
-                Button(onClick = {
-                    viewModel?.onGoogleClick()
-
-                }) {
+                Button(onClick = onSignInClick) {
+                    //   viewModel?.onGoogleClick()
                     Text("Sign in via Google")
                 }
+
 
                 Spacer(modifier = Modifier.padding(10.dp))
                 RegisterNow(viewModel = viewModel, nameButton = "Register Now?")
@@ -260,7 +255,7 @@ fun pev() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            LoginPage()
+            // LoginPage()
         }
     }
 }
